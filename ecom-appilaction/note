@@ -1,0 +1,77 @@
+./mvnw spring-boot:build-image "-Dspring-boot.build-image.imageName=leduyhaii27/ecom-application" : lệnh này build image
+
+./mvnw spring-boot:build-image "-Dspring-boot.build-image.imageName=<your-dockerhub-username>/<your-image-name>"
+
+
+các lệnh docker cơ bản:
+docker pull <image-name> : lệnh này để tải image từ dockerhub về máy local
+docker images : lệnh này để liệt kê các image có trong máy local
+docker rmi <image-id> : lệnh này để xóa image trong máy local
+docker run -p 8080:8080 <image-name> : lệnh này để chạy container từ image đã có trong máy local
+docker ps : lệnh này để liệt kê các container đang chạy
+docker ps -a : lệnh này để liệt kê tất cả các container (bao gồm cả container đã dừng)
+docker stop <container-id> : lệnh này để dừng container đang chạy
+docker rm <container-id/container-name> : lệnh này để xóa container đã dừng
+docker rmi <image-id/image-name> : lệnh này để xóa image trong máy local
+docker logs <container-id> : lệnh này để xem log của container
+docker exec -it <container-id> /bash : lệnh này để vào bên trong container và sử dụng terminal của container đó
+docker push <your-dockerhub-username>/<your-image-name> : lệnh này để đẩy image từ máy local lên dockerhub
+docker push leduyhaii27/ecom-application : lệnh này để đẩy image từ máy local lên dockerhub
+
+docker run -it -d -p <host-port>:<container-port> --name <name> <image> : lệnh này để chạy container với tên cụ thể và ánh xạ cổng
+docker stop <container-id/container-name> : lệnh này để dừng container bằng id hoặc tên
+docker start <container-id/container-name> : lệnh này để khởi động lại container đã dừng bằng id hoặc tên
+
+docker build -t <username/image> : lệnh này để build image từ Dockerfile và gán thẻ (tag) cho image
+docker logs <container-id/container-name> : lệnh này để xem log của container bằng id hoặc tên
+docker inspect <container-id/container-name> : lệnh này để xem thông tin chi tiết về container
+
+
+//the project use PostgreSQL database
+docker run -d --name db -e POSTGRES_PASSWORD=mysecretpassword postgres:14
+
+//Can see through pgadmin interface
+docker run -d --name pgadmin -e PGADMIN_DEFAULT_EMAIL=user@domain.com -e PGADMIN_DEFAULT_PASSWORD=SuperSecret dpage/pgadmin4
+
+// cho container này truy cập đến container khác là không được trong docker
+docker exec -it pgadmin ping db : không được vì 2 container này không cùng mạng với nhau
+
+// docker netwwork fix được
+docker network create ecom-network
+docker network prune : lệnh này để xóa các mạng không sử dụng trong docker
+docker rm -f db pgadmin : lệnh này để xóa các container db và pgadmin nếu chúng đang chạy
+docker run -d --name db --network ecom-network -e POSTGRES_PASSWORD=mysecretpassword postgres:14
+docker run -d --name pgadmin --network ecom-network -e PGADMIN_DEFAULT_EMAIL=user@domain.com -e PGADMIN_DEFAULT_PASSWORD=SuperSecret dpage/pgadmin4
+docker exec -it pgadmin ping db
+
+
+// thực hành với dự án
+docker network create postgres
+
+docker run -d \
+    --name postgres_container \
+    -e POSTGRES_USER=leduyhai \
+    -e POSTGRES_PASSWORD=leduyhai \
+    -e PGDATA=/data/postgres \
+    -v postgres:/data/postgres \
+    -p 5432:5432 \
+    --network postgres \
+    --restart unless-stopped \
+    postgres:14
+
+
+docker run -d \
+    --name pgadmin_container \
+    -e PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org \
+    -e PGADMIN_DEFAULT_PASSWORD=admin \
+    -e PGADMIN_CONFIG_SERVER_MODE=False \
+    -v pgadmin:/var/lib/pgadmin \
+    -p 5050:80 \
+    --network postgres \
+    --restart unless-stopped \
+    dpage/pgadmin4
+
+
+
+
+docker exec -it postgres psql -h localhost -p 5432 -U leduyhai -d ecomdb

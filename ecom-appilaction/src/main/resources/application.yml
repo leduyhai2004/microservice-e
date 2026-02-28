@@ -1,0 +1,39 @@
+#spring.application.name=ecom-appilaction
+#spring.h2.console.enabled=true
+#spring.datasource.url=jdbc:h2:mem:test
+spring:
+  application:
+    name: ecom-application
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ecomdb
+    username: leduyhai
+    password: 272004
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#  h2:
+#    console:
+#      enabled: true
+#  datasource:
+#    url: jdbc:h2:mem:test
+#  jpa:
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: create
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+  info:
+    env:
+      enabled: true
