@@ -2,6 +2,7 @@
 
 ./mvnw spring-boot:build-image "-Dspring-boot.build-image.imageName=<your-dockerhub-username>/<your-image-name>"
 
+Source code : https://github.com/EmbarkXOfficial/ecom-microservices
 
 các lệnh docker cơ bản:
 docker pull <image-name> : lệnh này để tải image từ dockerhub về máy local

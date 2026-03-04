@@ -5,7 +5,7 @@ spring:
   application:
     name: ecom-application
   datasource:
-    url: jdbc:postgresql://localhost:5432/ecomdb
+    url: jdbc:postgresql://localhost:5433/ecomdb
     username: leduyhai
     password: 272004
   jpa:
