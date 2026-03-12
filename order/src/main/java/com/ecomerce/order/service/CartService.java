@@ -29,7 +29,7 @@ public class CartService {
     // if (userOpt.isEmpty()) {
     // return false;
     // }
-    CartItem exsitingCartItem = cartItemRepository.findByUserIdAndProductId(userId, cartItemRequest.getProductId());
+    CartItem exsitingCartItem = cartItemRepository.findByUserIdAndProductId(Long.parseLong(userId), Long.parseLong(cartItemRequest.getProductId()));
     if (exsitingCartItem != null) {
       exsitingCartItem.setQuantity(exsitingCartItem.getQuantity() + cartItemRequest.getQuantity());
       exsitingCartItem.setPrice(BigDecimal.ZERO);
