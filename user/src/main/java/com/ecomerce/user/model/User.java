@@ -1,13 +1,9 @@
 package com.ecomerce.user.model;
 
 import com.ecomerce.user.dto.UserRole;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * orphanRemoval = true
@@ -18,20 +14,16 @@ import lombok.NoArgsConstructor;
  */
 
 @Data
-@Entity(name = "user_table")
-//@Entity
-//@AllArgsConstructor
-@NoArgsConstructor
-@AllArgsConstructor
+@Document(collection = "users")
 public class User extends BaseEntity{
   private String username;
+
+  @Indexed(unique = true)
   private String email;
   private String password;
   private String phoneNumber;
   private UserRole role = UserRole.CUSTOMER;
 
-  @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "address_id", referencedColumnName = "id")
   private Address address;
 
 }

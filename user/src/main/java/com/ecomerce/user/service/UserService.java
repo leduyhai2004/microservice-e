@@ -23,16 +23,17 @@ public class UserService {
 
   public void addUser(UserRequest userRequest) {
     User user = UserMapper.toUserEntity(userRequest);
-    userRepository.save(user);
+    User saved = userRepository.save(user);
+    System.out.println("Saved user id = " + saved.getId());
   }
 
-  public UserResponse getUserById(Long id) {
-    User user = userRepository.findById(id).orElse(null);
+  public UserResponse getUserById(String id) {
+    User user = userRepository.findById(String.valueOf(id)).orElse(null);
     return UserMapper.toUserResponse(user);
   }
 
-  public UserResponse updateUser(Long id, UserRequest user) {
-    User existingUser = userRepository.findById(id).orElse(null);
+  public UserResponse updateUser(String id, UserRequest user) {
+    User existingUser = userRepository.findById(String.valueOf(id)).orElse(null);
     if (existingUser != null) {
       existingUser.setUsername(user.getUsername());
       existingUser.setEmail(user.getEmail());
