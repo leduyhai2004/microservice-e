@@ -1,0 +1,3 @@
+spring:
+  mongodb:
+    uri: mongodb+srv://${MONGO_ATLAS_USERNAME}:${MONGO_ATLAS_PASSWORD}@${MONGO_ATLAS_HOST}/${MONGO_ATLAS_DB}?retryWrites=true&w=majority

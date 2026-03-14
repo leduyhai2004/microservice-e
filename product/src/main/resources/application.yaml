@@ -1,17 +1,9 @@
 spring:
   application:
-    name: product-service
-  datasource:
-    #url: jdbc:postgresql://localhost:5433/productdb
-    url: jdbc:postgresql://ep-nameless-truth-an9g7cir-pooler.c-6.us-east-1.aws.neon.tech/product?sslmode=require&channel_binding=require
-    username: neondb_owner
-    password: npg_7xSLqz9GsOng
-  jpa:
-    database: POSTGRESQL
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    name: order-service
+
+  profiles:
+    active: ${SPRING_PROFILE:local}
 
 server:
-  port: 8081
+  port: ${SERVER_PORT_PRODUCT}
