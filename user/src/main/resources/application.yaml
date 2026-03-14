@@ -4,6 +4,11 @@ spring:
 
   mongodb:
     uri: mongodb+srv://duyha0207_db_user:3NweIucb9ooUIlJd@user-data.jxvrcva.mongodb.net/userdb?retryWrites=true&w=majority
+#    uri : mongodb://localhost:27017/userdb
+#    host: localhost
+#    port: 27017
+#    database: userdb
+#  datasource
 #    url: jdbc:postgresql://localhost:5433/userdb
 #    username: leduyhai
 #    password: 272004

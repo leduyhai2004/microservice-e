@@ -1,5 +1,47 @@
-mongodb atlas cluster
+mongodb atlas cluster :
 username: duyha0207_db_user
 password: 3NweIucb9ooUIlJd
+uri to connect to cluster : mongodb+srv://duyha0207_db_user:3NweIucb9ooUIlJd@user-data.jxvrcva.mongodb.net/?appName=user-data
 
-mongodb+srv://duyha0207_db_user:3NweIucb9ooUIlJd@user-data.jxvrcva.mongodb.net/?appName=user-data
+postGresql neon link : postgresql://neondb_owner:npg_7xSLqz9GsOng@ep-nameless-truth-an9g7cir-pooler.c-6.us-east-1.aws.neon.tech/product?sslmode=require&channel_binding=require
+postGresql neon link : postgresql://neondb_owner:npg_7xSLqz9GsOng@ep-nameless-truth-an9g7cir-pooler.c-6.us-east-1.aws.neon.tech/order?sslmode=require&channel_binding=require
+
+Docker-compose.yml : connect to mysql database
+```yamlversion: '3.8'
+services:
+  mysql:
+    container_name: mysql_container
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: embarkx
+      MYSQL_DATABASE: embarkx
+      MYSQL_USER: embarkx
+      MYSQL_PASSWORD: embarkx
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    networks:
+      - mysql
+    restart: unless-stopped
+
+  phpmyadmin:
+    container_name: phpmyadmin_container
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: embarkx
+    ports:
+      - "8484:80"
+    networks:
+      - mysql
+    restart: unless-stopped
+
+networks:
+  mysql:
+    driver: bridge
+
+volumes:
+  mysql_data:
+```
