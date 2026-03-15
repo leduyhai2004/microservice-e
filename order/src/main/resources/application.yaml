@@ -1,9 +1,5 @@
 spring:
   application:
     name: order-service
-
-  profiles:
-    active: ${SPRING_PROFILE:local}
-
-server:
-  port: ${SERVER_PORT_ORDER}
+  config:
+    import: optional:configserver:http://localhost:8888
