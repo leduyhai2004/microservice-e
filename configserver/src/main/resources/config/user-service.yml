@@ -4,5 +4,17 @@ spring:
     port: ${MONGO_DB_PORT:27017}
     database: ${DB_USER_NAME:userdb}
 
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USERNAME:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+
 server:
   port: 8082
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
