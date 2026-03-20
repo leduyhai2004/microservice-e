@@ -1,26 +1,20 @@
 package com.ecomerce.user.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+
 import java.time.LocalDate;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.LastModifiedDate;
 
-@MappedSuperclass
 @Data
-@NoArgsConstructor
 public class BaseEntity {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private String id;
 
-  @CreationTimestamp
+  @CreatedDate
   private LocalDate createDate;
 
-  @UpdateTimestamp
+  @LastModifiedDate
   private LocalDate updateDate;
 }
