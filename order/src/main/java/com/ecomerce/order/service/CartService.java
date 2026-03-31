@@ -1,11 +1,16 @@
 package com.ecomerce.order.service;
 
+import com.ecomerce.order.clients.ProductServiceClient;
+import com.ecomerce.order.clients.UserServiceClient;
 import com.ecomerce.order.dto.CartItemRequest;
+import com.ecomerce.order.dto.ProductResponse;
+import com.ecomerce.order.dto.UserResponse;
 import com.ecomerce.order.model.CartItem;
 import com.ecomerce.order.repository.CartItemRepository;
 import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,21 +19,21 @@ import org.springframework.stereotype.Service;
 @Transactional
 public class CartService {
   private final CartItemRepository cartItemRepository;
+  private final ProductServiceClient productServiceClient;
+  private final UserServiceClient userServiceClient;
 
   public boolean addToCart(String userId, CartItemRequest cartItemRequest) {
-    // Optional<Product> productOpt =
-    // productRepository.findById(cartItemRequest.getProductId());
-    // if (productOpt.isEmpty()) {
-    // return false;
-    // }
-    // Product product = productOpt.get();
-    // if(product.getStockQuantity() < cartItemRequest.getQuantity()) {
-    // return false;
-    // }
-    // Optional<User> userOpt = userRepository.findById(Long.parseLong(userId));
-    // if (userOpt.isEmpty()) {
-    // return false;
-    // }
+    ProductResponse productResponse = productServiceClient.getProductById(cartItemRequest.getProductId());
+    if (productResponse == null) {
+      return false;
+    }
+    if (productResponse.getStockQuantity() < cartItemRequest.getQuantity()) {
+      return false;
+    }
+    UserResponse userResponse = userServiceClient.getUserById(userId);
+    if (userResponse == null) {
+      return false;
+    }
     CartItem exsitingCartItem = cartItemRepository.findByUserIdAndProductId(Long.parseLong(userId), Long.parseLong(cartItemRequest.getProductId()));
     if (exsitingCartItem != null) {
       exsitingCartItem.setQuantity(exsitingCartItem.getQuantity() + cartItemRequest.getQuantity());
@@ -44,6 +49,7 @@ public class CartService {
     }
     return true;
   }
+
 
   public boolean deleteItemFromCart(String userId, Long productId) {
     if (userId != null || productId != null) {
