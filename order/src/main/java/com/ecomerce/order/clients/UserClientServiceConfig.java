@@ -1,6 +1,5 @@
 package com.ecomerce.order.clients;
 
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatusCode;
@@ -20,7 +19,7 @@ public class UserClientServiceConfig {
 //    }
 
     @Bean
-    public UserServiceClient productServiceClient(RestClient.Builder restClientBuilder) {
+    public UserServiceClient userServiceClient(RestClient.Builder restClientBuilder) {
         RestClient restClient = restClientBuilder.baseUrl("http://user-service")
                 .defaultStatusHandler(HttpStatusCode::is4xxClientError, (request, response) -> {
                     Optional.empty();
