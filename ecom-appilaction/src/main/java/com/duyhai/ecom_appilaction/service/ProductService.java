@@ -23,7 +23,7 @@ public class ProductService {
   }
 
   public ProductResponse getProductById(Long id) {
-    Product product = productRepository.findById(id).orElse(null);
+    Product product = productRepository.findByIdAndActiveTrue(id).orElse(null);
     if (product == null) {
       return null;
     }

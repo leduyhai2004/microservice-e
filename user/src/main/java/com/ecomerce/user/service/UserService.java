@@ -28,7 +28,7 @@ public class UserService {
   }
 
   public UserResponse getUserById(String id) {
-    User user = userRepository.findById(String.valueOf(id)).orElse(null);
+    User user = userRepository.findByIdAndActiveTrue(String.valueOf(id)).orElse(null);
     return UserMapper.toUserResponse(user);
   }
 
